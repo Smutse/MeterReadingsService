@@ -16,12 +16,6 @@ namespace EnsekMeterReadingsService.Controllers
         public async Task<ActionResult<List<MeterReadingUpload>>> GetReadingUploads()
         {
             return await this.dataContext.MeterReadingUploads.ToListAsync();
-        }
-        
-        [HttpPost]
-        public async Task<ActionResult<List<MeterReadingUpload>>> AddListMeterReadings(List<MeterReadingUpload> meterReadingUploads)
-        {
-            return Ok(meterReadingUploads);
-        }        
+        }    
     }
 }
