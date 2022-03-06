@@ -1,5 +1,8 @@
 ﻿namespace EnsekMeterReadingsService.Data
 {
+    /// <summary>
+    /// Data context for meter reading database
+    /// </summary>
     public class DataContext : DbContext
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }

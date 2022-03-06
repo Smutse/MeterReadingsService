@@ -2,6 +2,9 @@
 
 namespace EnsekMeterReadingsService
 {
+    /// <summary>
+    /// Object to hold account table data
+    /// </summary>
     public class Account
     {
         [Key]

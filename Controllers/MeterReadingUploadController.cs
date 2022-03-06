@@ -2,6 +2,9 @@
 
 namespace EnsekMeterReadingsService.Controllers
 {
+    /// <summary>
+    /// Get meter readings currently only consumed by swagger
+    /// </summary>
     [Route("get-meter-readings")]
     [ApiController]
     public class MeterReadingUploadController : Controller

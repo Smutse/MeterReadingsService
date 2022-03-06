@@ -5,6 +5,14 @@ namespace EnsekMeterReadingsService
 {
     public class HelperClass
     {
+        /// <summary>
+        /// Parse Meter Readings
+        /// </summary>
+        /// <param name="accountIdList"></param>
+        /// <param name="cells"></param>
+        /// <param name="dataContext"></param>
+        /// <param name="existingMeterReadings"></param>
+        /// <returns></returns>
         public MeterReadingUpload ParseMeterReading(List<string> accountIdList, string[] cells, DataContext dataContext, List<MeterReadingUpload> existingMeterReadings)
         {
             
@@ -37,7 +45,13 @@ namespace EnsekMeterReadingsService
             }
             return meterReadingUpload;
         }
-
+        /// <summary>
+        /// Check for duplicates in lists of meter readings
+        /// </summary>
+        /// <param name="existingMeterReadings"></param>
+        /// <param name="cells"></param>
+        /// <param name="dt"></param>
+        /// <returns></returns>
         public bool CheckForDuplicatesAndNewerReadings(List<MeterReadingUpload> existingMeterReadings, string[] cells, DateTime dt)
         {
             bool duplicateFound = false;

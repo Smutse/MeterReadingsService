@@ -2,6 +2,9 @@
 
 namespace EnsekMeterReadingsService.Controllers
 {
+    /// <summary>
+    /// Entry point and key funtionality for uploading csv data
+    /// </summary>
     [Route("meter-reading-uploads")]
     [ApiController]
     public class CSVUploadController : Controller

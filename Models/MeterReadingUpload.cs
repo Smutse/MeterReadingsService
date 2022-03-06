@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EnsekMeterReadingsService
 {
+    /// <summary>
+    /// MeterReadingUpload object
+    /// </summary>
     public class MeterReadingUpload
     {
         [Key]
