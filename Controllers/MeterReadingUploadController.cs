@@ -52,8 +52,6 @@ namespace EnsekMeterReadingsService.Controllers
             ReturnValues returnValues = new ReturnValues();
 
             List<MeterReadingUpload> meterReadingsToUpload = new List<MeterReadingUpload>();
-            var accountIdList = _mapper.Map<List<AccountDto>>(_accountRepository.GetAccounts());
-
 
             returnValues.SuccessfulRecordsCount = 0;
             returnValues.FailedRecordsCount = 0;
@@ -77,7 +75,7 @@ namespace EnsekMeterReadingsService.Controllers
                             string[] cells = row.Split(',');
 
                             MeterReadingUpload meterReadingUpload = new MeterReadingUpload();
-                            meterReadingUpload = helper.ParseMeterReading(accountIdList, cells, existingMeterReadings);
+                            meterReadingUpload = helper.ParseMeterReading(cells, existingMeterReadings);
 
                             if (meterReadingUpload.AccountId > 0)
                             {

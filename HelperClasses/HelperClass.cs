@@ -14,36 +14,35 @@ namespace EnsekMeterReadingsService
         /// <param name="dataContext"></param>
         /// <param name="existingMeterReadings"></param>
         /// <returns></returns>
-        public MeterReadingUpload ParseMeterReading(List<AccountDto> accountIdList, string[] cells, List<MeterReadingUploadDto> existingMeterReadings)
+        public MeterReadingUpload ParseMeterReading(string[] cells, List<MeterReadingUploadDto> existingMeterReadings)
         {
             
             MeterReadingUpload meterReadingUpload = new MeterReadingUpload();
-            if (accountIdList.Count > 0)
-            {
-                try
-                {
-                    DateTime dt = new DateTime();
 
-                    if (DateTime.TryParseExact(cells[1], "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
+            try
+            {
+                DateTime dt = new DateTime();
+
+                if (DateTime.TryParseExact(cells[1], "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dt))
+                {
+                    //Should we allow negative meter readings?
+                    //Assumption is no as the format is NNNNN but clarification would be preferable.
+                    if (Regex.IsMatch(cells[2], @"\b\d{5}\b") && Regex.IsMatch(cells[2], @"^[0-9]"))
                     {
-                        //Should we allow negative meter readings?
-                        //Assumption is no as the format is NNNNN but clarification would be preferable.
-                        if (Regex.IsMatch(cells[2], @"\b\d{5}\b") && Regex.IsMatch(cells[2], @"^[0-9]"))
+                        if (!CheckForDuplicatesAndNewerReadings(existingMeterReadings, cells, dt))
                         {
-                            if (!CheckForDuplicatesAndNewerReadings(existingMeterReadings, cells, dt))
-                            {
-                                meterReadingUpload.AccountId = int.Parse(cells[0]);
-                                meterReadingUpload.MeterReadingDateTime = dt;
-                                meterReadingUpload.MeterReadValue = cells[2];
-                            }
+                            meterReadingUpload.AccountId = int.Parse(cells[0]);
+                            meterReadingUpload.MeterReadingDateTime = dt;
+                            meterReadingUpload.MeterReadValue = cells[2];
                         }
                     }
                 }
-                catch
-                {
-                    return meterReadingUpload;
-                }
             }
+            catch
+            {
+                return meterReadingUpload;
+            }
+
             return meterReadingUpload;
         }
         /// <summary>
