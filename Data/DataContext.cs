@@ -10,10 +10,5 @@
         public DbSet<MeterReadingUpload> MeterReadingUploads { get; set; }
 
         public DbSet<Account> Accounts { get; set; }
-
-        public List<MeterReadingUpload> GetReadingUploads(DataContext dataContext)
-        {
-            return dataContext.MeterReadingUploads.ToList();
-        }
     }
 }
