@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
+using EnsekMeterReadingsService.Dto;
 
 namespace EnsekMeterReadingsService
 {
@@ -13,11 +14,11 @@ namespace EnsekMeterReadingsService
         /// <param name="dataContext"></param>
         /// <param name="existingMeterReadings"></param>
         /// <returns></returns>
-        public MeterReadingUpload ParseMeterReading(List<string> accountIdList, string[] cells, DataContext dataContext, List<MeterReadingUpload> existingMeterReadings)
+        public MeterReadingUpload ParseMeterReading(List<AccountDto> accountIdList, string[] cells, List<MeterReadingUploadDto> existingMeterReadings)
         {
             
             MeterReadingUpload meterReadingUpload = new MeterReadingUpload();
-            if (accountIdList.Contains(cells[0]))
+            if (accountIdList.Count > 0)
             {
                 try
                 {
@@ -52,10 +53,10 @@ namespace EnsekMeterReadingsService
         /// <param name="cells"></param>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public bool CheckForDuplicatesAndNewerReadings(List<MeterReadingUpload> existingMeterReadings, string[] cells, DateTime dt)
+        public bool CheckForDuplicatesAndNewerReadings(List<MeterReadingUploadDto> existingMeterReadings, string[] cells, DateTime dt)
         {
             bool duplicateFound = false;
-            foreach (MeterReadingUpload existingReading in existingMeterReadings)
+            foreach (MeterReadingUploadDto existingReading in existingMeterReadings)
             {
                 if (existingReading.AccountId == int.Parse(cells[0]) && existingReading.MeterReadValue == cells[2] && existingReading.MeterReadingDateTime >= dt)
                 {

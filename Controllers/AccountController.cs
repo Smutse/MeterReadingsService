@@ -1,21 +1,35 @@
-﻿namespace EnsekMeterReadingsService.Controllers
+﻿using AutoMapper;
+using EnsekMeterReadingsService.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using EnsekMeterReadingsService.Dto;
+
+namespace EnsekMeterReadingsService.Controllers
 {
-    public class AccountController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AccountController : Controller
     {
-        /// <summary>
-        /// Get accounts from database
-        /// </summary>
-        /// <param name="dataContext"></param>
-        /// <returns></returns>
-        public async Task<List<string>> GetAccountsAsync(DataContext dataContext)
+        private readonly iAccountRepository _accountRepository;
+        private readonly IMapper _mapper;
+        public AccountController(iAccountRepository accountRepository, IMapper mapper)
         {
-            List<Account> accounts = await dataContext.Accounts.ToListAsync();
-            List<string> accountIdList = new List<string>();
-            foreach(Account account in accounts)
+            _accountRepository = accountRepository;
+            _mapper = mapper;
+        }
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Account>))]
+        public IActionResult getAccounts()
+        {
+            var accounts = _mapper.Map<List<AccountDto>>(_accountRepository.GetAccounts());
+
+            if (!ModelState.IsValid)
             {
-                accountIdList.Add(account.AccountId.ToString());
+                return BadRequest(ModelState);
             }
-            return accountIdList;
+            else
+            {
+                return Ok(accounts);
+            }
         }
     }
 }

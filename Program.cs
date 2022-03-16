@@ -1,10 +1,14 @@
 global using EnsekMeterReadingsService.Data;
 global using Microsoft.EntityFrameworkCore;
+using EnsekMeterReadingsService.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<iAccountRepository, EnsekMeterReadingsService.Repository.AccountRepository>();
+builder.Services.AddScoped<IMeterReadingUploadRepository, EnsekMeterReadingsService.Repository.MeterReadingUploadRepository>();
 // Add Sql Providor
 builder.Services.AddDbContext<DataContext>(options =>
 {
